@@ -1,14 +1,49 @@
 #include <stdio.h>
 
-int main()
-{
-    int pav, pontos, cftv, voip, fibra, cutp, s, dio, caixaemenda, pigtail;
-    int cordaoopt, acoplaopt, terminadoropt, caboopt, rack, pgtto, andar, i, rmh;
+    int caixaemenda, pigtail, cordaoopt, acoplaopt, terminadoropt, caboopt, rack, pgtto, andar;
+    int pav, pontos, cftv, voip, fibra, cutp, s, dio, dist;
+    int i, tpq, w, z, h;
     
+void padrao();
+
+void malha();
+
+void backbone();
+
+int main() {
     printf("Vamos Começar nossa Quantificação de Material.\n");
-    printf("\n");
     
-    printf("Quantos pavimentos existem?\n");
+    
+    
+    do{
+        printf("\nInsira o numero que corresponde ao tipo de Quantificação de Material que deseja fazer.\n 1 - Apenas Malha Horizontal\n 2 - Apenas BackBone\n 3 - Ambos\n");
+        printf("\nNúmero: ");
+        scanf("%d", &tpq);
+        
+        if(tpq==1){
+            padrao();
+            malha();
+            
+        } else if(tpq==2){
+            padrao();
+            backbone();
+            
+        } else if(tpq==3){
+            padrao();
+            malha();
+            backbone();
+            
+        } else{
+            printf("\nInsira um número dentro dos parametros.\n");
+            }
+    } while(tpq>3 || tpq<1);
+    
+    
+    return 0;
+}
+
+void padrao(){
+    printf("\nQuantos pavimentos existem?\n");
     scanf("%d", &pav);
     
     printf("Quantos pontos por pavimentos existem?\n");
@@ -20,9 +55,20 @@ int main()
     printf("Quantos desses pontos são de VoIP?\n");
     scanf("%d", &voip);
     
-    cutp = (((pontos * 2 ) * pav)* 30)/305;
-    
     s = (((pontos * 2 ) * pav)/24) + 1;
+}
+
+void malha(){
+    printf("\nQual a distancia da malha horizontal?\n");
+    scanf("%d", &dist);
+    cutp = (((pontos * 2 ) * pav)* dist);
+    h = cutp/305;
+    w = h*305;
+    if(cutp>w){
+        cutp = h+1;
+        } else{
+        cutp = h;
+    }
     
     printf("\n");
      printf("----------------------------------------\n" );
@@ -37,7 +83,7 @@ int main()
      }
      printf("Espelho 4x4: %d\n", pontos  * pav);
      printf("Etiquetas para identificação de tomadas e espelho: %d\n", ((pontos  * pav) + ((pontos * 2 ) * pav )));
-     printf("Cabo UTP: %d caixas\n", cutp + 1);
+     printf("Cabo UTP: %d caixas de 305 metros \n", cutp);
      printf("Switch 24 portas: %d\n", s);
      printf("Patch Panel 24 portas: %d\n", s);
      if( voip > 0){
@@ -52,10 +98,10 @@ int main()
      printf("Bandeja Deslizante: %d\n", pav);
      printf("Bandeja Fixa: %d\n", pav);
      printf("Rack para o Malha Horizontal de tamanho: %dU\n", (s + s + (s*2) + pav) );
-     
-   
-     
-     printf("\n");
+}
+
+void backbone(){
+    printf("\n");
      printf("----------------------------------------\n" );
      printf("BACKBONE\n");
      fibra = 4;
@@ -95,10 +141,4 @@ int main()
     
     rack = (fibra * pav /24) + 1;
     printf("Rack para o Backbone de tamanho: %dU\n", rack + dio + rack + dio);
-
-
-    
-    
-
-    return 0;
 }
