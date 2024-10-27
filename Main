@@ -36,7 +36,7 @@ int main()
          printf("Patch Cord, Categoria 6 e cor Amarelo: %d\n", voip * pav);
      }
      printf("Espelho 4x4: %d\n", pontos  * pav);
-     printf("Etiquetas para identificação de tomadas e espelho: %d\n", ((pontos  * pav) + ((pontos * 2 ) * pav ));
+     printf("Etiquetas para identificação de tomadas e espelho: %d\n", ((pontos  * pav) + ((pontos * 2 ) * pav )));
      printf("Cabo UTP: %d caixas\n", cutp + 1);
      printf("Switch 24 portas: %d\n", s);
      printf("Patch Panel 24 portas: %d\n", s);
