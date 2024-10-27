@@ -20,14 +20,14 @@ int main()
     printf("Quantos desses pontos são de VoIP?\n");
     scanf("%d", &voip);
     
-    cutp = (((pontos * 2 + cftv + voip) * pav)* 30)/305;
+    cutp = (((pontos * 2 ) * pav)* 30)/305;
     
-    s = (((pontos * 2 + cftv + voip) * pav)/24) + 1;
+    s = (((pontos * 2 ) * pav)/24) + 1;
     
     printf("\n");
      printf("----------------------------------------\n" );
      printf("MALHA HORIZONTAL\n");
-     printf("Tomadas RJ-45: %d\n", (pontos * 2 + cftv + voip) * pav);
+     printf("Tomadas RJ-45: %d\n", (pontos * 2 ) * pav);
      printf("Patch Cord, Categoria 6 e cor Azul: %d\n", pontos * 2 * pav);
      if( cftv > 0){
          printf("Patch Cord, Categoria 6 e cor local: %d\n", cftv * pav);
@@ -35,14 +35,14 @@ int main()
      if( voip > 0){
          printf("Patch Cord, Categoria 6 e cor Amarelo: %d\n", voip * pav);
      }
-     printf("Espelho 4x4: %d\n", (pontos + cftv + voip) * pav);
-     printf("Etiquetas para identificação de tomadas e espelho: %d\n", ((pontos + cftv + voip) * pav) + (pontos * 2 + cftv + voip) * pav );
+     printf("Espelho 4x4: %d\n", pontos  * pav);
+     printf("Etiquetas para identificação de tomadas e espelho: %d\n", ((pontos  * pav) + ((pontos * 2 ) * pav ));
      printf("Cabo UTP: %d caixas\n", cutp + 1);
      printf("Switch 24 portas: %d\n", s);
      printf("Patch Panel 24 portas: %d\n", s);
      if( voip > 0){
          printf("Patch Cable, Categoria 6 e Azul: %d\n", ((pontos - voip) * 2) * pav);
-         printf("Patch Cable, Categoria 6 e Verde: %d\n", voip * 2 * pav);
+         printf("Patch Cable, Categoria 6 e Verde: %d\n", voip * pav);
      } else {
          printf("Patch Cable, Categoria 6 e Azul: %d\n", pontos * 2 * pav);
      }
