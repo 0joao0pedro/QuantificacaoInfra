@@ -1,7 +1,7 @@
 #include <stdio.h>
 
     int caixaemenda, pigtail, cordaoopt, acoplaopt, terminadoropt, caboopt, rack, pgtto, andar;
-    int pav, pontos, cftv, voip, fibra, cutp, s, dio, dist, oms;
+    int pav, pontos, cftv, voip, fibra, cutp, s, dio, dist, oms, dvr, rdvr;
     int i, tpq, w, h, z, y;
     
 void padrao();
@@ -46,7 +46,7 @@ void padrao(){
     printf("\nQuantos pavimentos existem?\n");
     scanf("%d", &pav);
     
-    printf("Quantos pontos por pavimentos existem?\n");
+    printf("Quantos pontos de rede por pavimentos existem?\n");
     scanf("%d", &pontos);
     
     printf("Quantos desses pontos são de CFTV?\n");
@@ -55,13 +55,13 @@ void padrao(){
     printf("Quantos desses pontos são de VoIP?\n");
     scanf("%d", &voip);
     
-    s = (((pontos * 2 ) * pav)/24) + 1;
+    s = ((pontos  * pav)/24) + 1;
 }
 
 void malha(){
     printf("\nQual a distancia da malha horizontal?\n");
     scanf("%d", &dist);
-    cutp = (((pontos * 2 ) * pav)* dist);
+    cutp = ((pontos  * pav)* dist);
     h = cutp/305;
     w = h*305;
     if(cutp>w){
@@ -73,30 +73,39 @@ void malha(){
     printf("\n");
     printf("----------------------------------------\n" );
     printf("MALHA HORIZONTAL\n");
-    printf("Tomadas RJ-45: %d\n", (pontos * 2 ) * pav);
-    printf("Patch Cord, Categoria 6 e cor Azul: %d\n", pontos * 2 * pav);
+    printf("Tomadas RJ-45: %d\n", pontos * pav);
+    printf("Patch Cord, Categoria 6: %d\n", ((pontos - cftv) - voip )* pav);
     if( cftv > 0){
-        printf("Patch Cord, Categoria 6 e cor local: %d\n", cftv * pav);
+        printf("Patch Cord, Categoria 6: %d\n", cftv * pav);
     }
     if( voip > 0){
-        printf("Patch Cord, Categoria 6 e cor Amarelo: %d\n", voip * pav);
+        printf("Patch Cord, Categoria 6: %d\n", voip * pav);
     }
-    printf("Espelho 4x4: %d\n", pontos  * pav);
-    printf("Etiquetas para identificação de tomadas e espelho: %d\n", ((pontos  * pav) + ((pontos * 2 ) * pav )));
+    printf("Espelho 4x2: %d\n", pontos  * pav);
+    printf("Etiquetas para identificação de tomadas e espelho: %d\n", (pontos * pav) + (pontos * pav));
     printf("Cabo UTP: %d caixas de 305 metros \n", cutp);
     printf("Switch 24 portas: %d\n", s);
     printf("Patch Panel 24 portas: %d\n", s);
+    if(){
+        
+    }
+    
     if( voip > 0){
-        printf("Patch Cable, Categoria 6 e Azul: %d\n", ((pontos - voip) * 2) * pav);
-        printf("Patch Cable, Categoria 6 e Verde: %d\n", voip * pav);
+        printf("Patch Cable, Categoria 6 e Azul: %d\n",((pontos - cftv) - voip )* pav);
+        printf("Patch Cable, Categoria 6 e Amarelo: %d\n", voip * pav);
     } else {
-        printf("Patch Cable, Categoria 6 e Azul: %d\n", pontos * 2 * pav);
+        printf("Patch Cable, Categoria 6 e Azul: %d\n", ((pontos - cftv) - voip )* pav);
     }
     if( cftv > 0){
         printf("Patch Cable, Categoria 6 e Vermelha: %d\n", cftv * pav);
     }
     printf("Bandeja Deslizante: %d\n", pav);
     printf("Bandeja Fixa: %d\n", pav);
+    if( voip > 0){
+      dvr = ((voip  * pav)/48) + 1;
+    }
+    
+    
     z=((s + s + (s*2) + pav))*1,5;
     printf("Rack para o Malha Horizontal de tamanho: %dU\n", z);
 }
@@ -134,11 +143,6 @@ void backbone(){
     printf("Acoplador Optico: %d\n", acoplaopt);
     cordaoopt = (fibra * pav)/2;
     printf("Cordão Optico: %d\n", acoplaopt);
-    terminadoropt = pav;
-    printf("Terminador Optico de 12 fibras: %d\n", terminadoropt);
-    pgtto = terminadoropt * 12;
-    printf("Pig tail para Terminador Optico SM 9x125 – simples – 2m – azul: %d\n", pgtto);
-    
     
     int x;
     x = 15;
