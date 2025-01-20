@@ -3,6 +3,7 @@
     int caixaemenda, pigtail, cordaoopt, acoplaopt, terminadoropt, caboopt, rack, pgtto, andar;
     int pav, pontos, cftv, voip, fibra, cutp, s, dio, dist, oms, dvr, rdvr;
     int i, tpq, w, h, z, y;
+    int pontot, cat, catre;
     
 void padrao();
 
@@ -46,7 +47,7 @@ void padrao(){
     printf("\nQuantos pavimentos existem?\n");
     scanf("%d", &pav);
     
-    printf("Quantos pontos de rede por pavimentos existem?\n");
+    printf("Quantos pontos de telecom por pavimentos existem?\n");
     scanf("%d", &pontos);
     
     printf("Quantos desses pontos são de CFTV?\n");
@@ -55,13 +56,15 @@ void padrao(){
     printf("Quantos desses pontos são de VoIP?\n");
     scanf("%d", &voip);
     
-    s = ((pontos  * pav)/24) + 1;
+    pontot = pontos * 2;
+    
+    s = ((pontot  * pav)/24) + 1;
 }
 
 void malha(){
     printf("\nQual a distancia da malha horizontal?\n");
     scanf("%d", &dist);
-    cutp = ((pontos  * pav)* dist);
+    cutp = ((pontot  * pav)* dist);
     h = cutp/305;
     w = h*305;
     if(cutp>w){
@@ -69,36 +72,102 @@ void malha(){
         } else{
         cutp = h;
     }
+    do{
+        printf("\nInsira o numero que corresponde a categoria de cabo que deseja fazer:\n 1 - Cat 5\n 2 - Cat 5e\n 3 - Cat 6\n 4 - Cat 6a\n 5 - Cat 7\n");
+        printf("\nNúmero: ");
+        scanf("%d", &cat);
+         if(cat > 5){
+            printf("\nInsira um número dentro dos parametros.\n");
+            }
+    } while(cat>5 || cat<1);
     
     printf("\n");
     printf("----------------------------------------\n" );
     printf("MALHA HORIZONTAL\n");
-    printf("Tomadas RJ-45: %d\n", pontos * pav);
-    printf("Patch Cord, Categoria 6: %d\n", ((pontos - cftv) - voip )* pav);
-    if( cftv > 0){
-        printf("Patch Cord, Categoria 6: %d\n", cftv * pav);
+    printf("Tomadas RJ-45: %d\n", pontot * pav);
+    
+    if(cat == 1){
+        printf("Patch Cord, Categoria 5, cor Azul: %d\n", ((pontot - cftv) - voip )* pav);
+    } else if(cat == 2){
+        printf("Patch Cord, Categoria 5e, cor Azul: %d\n", ((pontot - cftv) - voip )* pav);
+    } else if(cat==3){
+        printf("Patch Cord, Categoria 6, cor Azul: %d\n", ((pontot - cftv) - voip )* pav);
+    } else if(cat==4){
+        printf("Patch Cord, Categoria 6a, cor Azul: %d\n", ((pontot - cftv) - voip )* pav);
+    } else if(cat == 5){
+        printf("Patch Cord, Categoria 7, cor Azul: %d\n", ((pontot - cftv) - voip )* pav);
     }
-    if( voip > 0){
-        printf("Patch Cord, Categoria 6: %d\n", voip * pav);
+    
+    
+    if( cftv > 0 || cat == 1){
+        printf("Patch Cord, Categria 5 da mesma cor do teto: %d \n", cftv * pav);
+    } else if( cftv > 0 || cat == 2){
+        printf("Patch Cord, Categria 5e da mesma cor do teto: %d \n", cftv * pav);
+    } else if( cftv > 0 || cat == 3){
+        printf("Patch Cord, Categria 6 da mesma cor do teto: %d \n", cftv * pav);
+    } else if( cftv > 0 || cat == 4){
+        printf("Patch Cord, Categria 6a da mesma cor do teto: %d \n", cftv * pav);
+    } else if( cftv > 0 || cat == 5){
+        printf("Patch Cord, Categria 7 da mesma cor do teto: %d \n", cftv * pav);
     }
+    
+    
+    if( voip > 0 || cat == 1){
+        printf("Patch Cord, Categoria 5, cor Amarela: %d \n", voip * pav);
+    } else if( voip > 0 || cat == 2){
+        printf("Patch Cord, Categoria 5e, cor Amarela: %d \n", voip * pav);
+    } else if( voip > 0 || cat == 3){
+        printf("Patch Cord, Categoria 6, cor Amarela: %d \n", voip * pav);
+    } else if( voip > 0 || cat == 4){
+        printf("Patch Cord, Categoria 6a, cor Amarela: %d \n", voip * pav);
+    } else if( voip > 0 || cat == 5){
+        printf("Patch Cord, Categoria 7, cor Amarela: %d \n", voip * pav);
+    } 
+    
+    
     printf("Espelho 4x2: %d\n", pontos  * pav);
-    printf("Etiquetas para identificação de tomadas e espelho: %d\n", (pontos * pav) + (pontos * pav));
+    printf("Etiquetas para identificação de tomadas e espelho: %d\n", (pontos * pav) + (pontot * pav));
     printf("Cabo UTP: %d caixas de 305 metros \n", cutp);
     printf("Switch 24 portas: %d\n", s);
     printf("Patch Panel 24 portas: %d\n", s);
-    if(){
-        
+  
+    if(cat == 1){
+        printf("Patch Cord, Categoria 5, cor Azul: %d\n", ((pontot - cftv) - voip )* pav);
+    } else if(cat == 2){
+        printf("Patch Cord, Categoria 5e, cor Azul: %d\n", ((pontot - cftv) - voip )* pav);
+    } else if(cat==3){
+        printf("Patch Cord, Categoria 6, cor Azul: %d\n", ((pontot - cftv) - voip )* pav);
+    } else if(cat==4){
+        printf("Patch Cord, Categoria 6a, cor Azul: %d\n", ((pontot - cftv) - voip )* pav);
+    } else if(cat == 5){
+        printf("Patch Cord, Categoria 7, cor Azul: %d\n", ((pontot - cftv) - voip )* pav);
     }
     
-    if( voip > 0){
-        printf("Patch Cable, Categoria 6 e Azul: %d\n",((pontos - cftv) - voip )* pav);
-        printf("Patch Cable, Categoria 6 e Amarelo: %d\n", voip * pav);
-    } else {
-        printf("Patch Cable, Categoria 6 e Azul: %d\n", ((pontos - cftv) - voip )* pav);
+    
+    if( cftv > 0 || cat == 1){
+        printf("Patch Cord, Categria 5, cor Vermelha: %d \n", cftv * pav);
+    } else if( cftv > 0 || cat == 2){
+        printf("Patch Cord, Categria 5e, cor Vermelha: %d \n", cftv * pav);
+    } else if( cftv > 0 || cat == 3){
+        printf("Patch Cord, Categria 6, cor Vermelha: %d \n", cftv * pav);
+    } else if( cftv > 0 || cat == 4){
+        printf("Patch Cord, Categria 6a, cor Vermelha: %d \n", cftv * pav);
+    } else if( cftv > 0 || cat == 5){
+        printf("Patch Cord, Categria 7, cor Vermelha: %d \n", cftv * pav);
     }
-    if( cftv > 0){
-        printf("Patch Cable, Categoria 6 e Vermelha: %d\n", cftv * pav);
-    }
+    
+    
+    if( voip > 0 || cat == 1){
+        printf("Patch Cord, Categoria 5, cor Amarela: %d \n", voip * pav);
+    } else if( voip > 0 || cat == 2){
+        printf("Patch Cord, Categoria 5e, cor Amarela: %d \n", voip * pav);
+    } else if( voip > 0 || cat == 3){
+        printf("Patch Cord, Categoria 6, cor Amarela: %d \n", voip * pav);
+    } else if( voip > 0 || cat == 4){
+        printf("Patch Cord, Categoria 6a, cor Amarela: %d \n", voip * pav);
+    } else if( voip > 0 || cat == 5){
+        printf("Patch Cord, Categoria 7, cor Amarela: %d \n", voip * pav);
+    } 
     printf("Bandeja Deslizante: %d\n", pav);
     printf("Bandeja Fixa: %d\n", pav);
     if( voip > 0){
