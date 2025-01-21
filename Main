@@ -3,7 +3,7 @@
     int caixaemenda, pigtail, cordaoopt, acoplaopt, terminadoropt, caboopt, rack, pgtto, andar;
     int pav, pontos, cftv, voip, fibra, cutp, s, dio, dist, oms, dvr, rdvr;
     int i, tpq, w, h, z, y;
-    int pontot, cat, catre;
+    int pontot, cat;
     
 void padrao();
 
