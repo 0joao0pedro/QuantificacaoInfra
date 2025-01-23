@@ -1,10 +1,11 @@
 #include <stdio.h>
-
+#include <stdbool.h>
     int caixaemenda, pigtail, cordaoopt, acoplaopt, terminadoropt, caboopt, rack, pgtto, andar;
     int pav, pontos, cftv, voip, fibra, cutp, s, dio, dist, oms, dvr, rdvr;
     int i, tpq, w, h, z, y;
     int pontot, cat;
-    
+    int tamRack[] = {4, 6, 8, 10, 12, 14, 16, 20, 24, 28, 32, 36, 40, 44, 48};
+#define QUANTIDADE_TAMANHOS_RACK_DISPONIVEIS 15
 void padrao();
 
 void malha();
@@ -75,13 +76,13 @@ void padraobackbone(){
     if(cftv == 1){
         cftv = 10;
     } else if(cftv == 2){
-        cftv == 0;
+        cftv = 0;
     }
     
      if(voip == 1){
         voip = 10;
     } else if(voip == 2){
-        voip == 0;
+        voip = 0;
     }
 }
 void malha(){
@@ -224,8 +225,8 @@ void backbone(){
     printf("Quantidade de fibra total: %d\n", fibra * pav);
     dio = ((fibra * pav)/ 24) + 1;
     printf("Distribuidor óptico (DIO): %d\n", dio);
-    printf("Caixa de emenda: %d\n", dio);
-    pigtail = fibra * 2;
+    printf("Caixa de emenda: %d\n", pav);
+    pigtail = fibra;
     if(oms==1){
         printf("Pig tail SM 9x125 – duplo – 2m – azul: %d\n", pigtail);
     } else if(oms==2){
@@ -239,35 +240,44 @@ void backbone(){
     acoplaopt = fibra * pav;
     printf("Acoplador Optico: %d\n", acoplaopt);
     cordaoopt = fibra * pav;
-    printf("Cordão Optico: %d\n", acoplaopt);
+    printf("Cordão Optico: %d\n", cordaoopt);
     
     int x;
     x = 15;
-    andar = 30;
-    if(pav > 2){
-        for(int i = 2; i < pav ; i++){
+   
+    if(pav >= 2){
+        for(int i = 2; i <= pav ; i++){
         x = x + 5;
-        andar =  andar + x ;
+        
         }
     }
+    x = x + ((x * 20)/100);
     if(oms==1){
-        printf("Cabo Optico SM – OS1 - 9x125 – Tight buffer: %d\n", andar + 20/100 );
+        printf("Cabo Optico SM – OS1 - 9x125 – Tight buffer: %d\n", x );
     } else if(oms==2){
-        printf("Cabo Optico SM – OS2 - 9x125 – Tight buffer: %d\n", andar + 20/100 );
+        printf("Cabo Optico SM – OS2 - 9x125 – Tight buffer: %d\n", x );
     }else if(oms==3){
-        printf("Cabo Optico MM – OM1 - 62,5x125 – Tight buffer: %d\n", andar + 20/100 );
+        printf("Cabo Optico MM – OM1 - 62,5x125 – Tight buffer: %d\n", x );
     } else if(oms==4){
-        printf("Cabo Optico MM – OM2 - 50x125 – Tight buffer: %d\n", andar + 20/100 );
+        printf("Cabo Optico MM – OM2 - 50x125 – Tight buffer: %d\n", x );
     }else if(oms==5){
-        printf("Cabo Optico MM – OM3 - 50x125 – Tight buffer: %d\n", andar + 20/100 );
+        printf("Cabo Optico MM – OM3 - 50x125 – Tight buffer: %d\n", x );
     } else if(oms==6){
-        printf("Cabo Optico MM – OM4 - 50x125 – Tight buffer: %d\n", andar + 20/100 );
+        printf("Cabo Optico MM – OM4 - 50x125 – Tight buffer: %d\n", x );
     }else if(oms==7){
-        printf("Cabo Optico MM – OM5 - 50x125 – Tight buffer: %d\n", andar + 20/100 );
+        printf("Cabo Optico MM – OM5 - 50x125 – Tight buffer: %d\n", x );
     }
     
-    rack = (fibra * pav /24) + 1;
+    y=(dio + dio  )*1.5;
     
-    y=(rack + dio + rack + dio)*1,5;
+
+    
+        for (int i = 0; i < QUANTIDADE_TAMANHOS_RACK_DISPONIVEIS; i++){
+            if (y < tamRack[i]){
+                y = tamRack[i];
+                break;
+            }
+        }
+    
     printf("Rack para o Backbone de tamanho: %dU\n", y);
 }
